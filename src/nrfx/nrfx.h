@@ -1,14 +1,5 @@
 /*
- * Part of the real nrf_ccm.h from Nordic's NRFx HAL
- *
- * Note that there is a few changes compared to the original
- * Where relevant, these changes are:
- * Copyright (c) 2017 Oticon A/S
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
-/**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,42 +29,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef NRFX_H__
+#define NRFX_H__
 
-#ifndef BS_NRF_CCM_H__
-#define BS_NRF_CCM_H__
+#include <nrfx_config.h>
+/* Include local version of nrfx_common */
+#include "nrfx_common.h"
+#include <nrfx_glue.h>
 
-#include <nrfx.h>
+#undef NRFX_ASSERT
+#define NRFX_ASSERT(...)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <../nrfx_errors.h>
 
-/**
- * @brief CCM tasks.
- */
-typedef enum
-{
-    /*lint -save -e30*/
-    NRF_CCM_TASK_KSGEN        = offsetof(NRF_CCM_Type, TASKS_KSGEN),        ///< Start generation of key-stream.
-    NRF_CCM_TASK_CRYPT        = offsetof(NRF_CCM_Type, TASKS_CRYPT),        ///< Start encryption/decryption.
-    NRF_CCM_TASK_STOP         = offsetof(NRF_CCM_Type, TASKS_STOP),         ///< Stop encryption/decryption.
-#if defined(CCM_RATEOVERRIDE_RATEOVERRIDE_Pos) || defined(__NRFX_DOXYGEN__)
-    NRF_CCM_TASK_RATEOVERRIDE = offsetof(NRF_CCM_Type, TASKS_RATEOVERRIDE), ///< Override DATARATE setting in MODE register.
-#endif
-    /*lint -restore*/
-} nrf_ccm_task_t;
-
-
-void nrf_ccm_task_trigger(NRF_CCM_Type * p_reg,
-                                          nrf_ccm_task_t task);
-
-void nrf_ccm_int_enable(NRF_CCM_Type * p_reg, uint32_t mask);
-
-void nrf_ccm_int_disable(NRF_CCM_Type * p_reg, uint32_t mask);
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* BS_NRF_CCM_H__ */
+#endif // NRFX_H__
